@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.nio.DoubleBuffer;
+
 /**
  * Created by xiao on 2015/9/24.
  * 创建表存储
@@ -27,6 +29,10 @@ public class WeatherOpenHelper extends SQLiteOpenHelper {
             "country_code text," +
             "city_id integer" +
             ")";
+    private static  final String  CRETE_USER = "create table User(" +
+            "user_name text autoincrement," +
+            "user_pwd text" +
+            ")";
 
     public WeatherOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -34,6 +40,7 @@ public class WeatherOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL(CRETE_USER);//创建用户表
         db.execSQL(CREATE_PROVINCE);//创建Province表
         db.execSQL(CREATE_CITY);//创建城市表
         db.execSQL(CREATE_COUNTRY);//创建县表

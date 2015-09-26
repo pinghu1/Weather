@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.xiao.weather.model.City;
 import com.xiao.weather.model.Country;
 import com.xiao.weather.model.Province;
+import com.xiao.weather.model.User;
 
-import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -152,6 +152,37 @@ public class WeatherDB {
             cursor.close();
         }
         return countries;
+    }
+
+    /**
+     * 将User用户信息存储到数据库
+     */
+    public void saveUser(User user){
+        ContentValues cv  = new ContentValues();
+        cv.put("user_name",user.getUserName());
+        cv.put("user_pwd",user.getUserPwd());
+        db.insert("User",null,cv);
+    }
+    /**
+     * 从数据库中获取用户的姓名和密码,验证是否正确
+     */
+    public int isRight(String userName,String userPwd) {
+//        Cursor cursor = db.query("User", null, null, null, null, null, null);
+//        if (cursor.moveToFirst()){
+//            do{
+//                String user_name = cursor.getString(cursor.getColumnIndex("user_name"));
+//                String user_pwd = cursor.getString(cursor.getColumnIndex("user_pwd"));
+//                if (userName.equals(user_name)) {
+//                    return 1;
+//                }
+//                if (userPwd.equals(user_pwd)) {
+//                    return 2;
+//                }
+//            }while (cursor.moveToNext());
+//
+//
+//        }
+        return 3;
     }
 
 }
