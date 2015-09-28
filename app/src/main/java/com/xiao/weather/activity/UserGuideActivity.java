@@ -1,5 +1,6 @@
 package com.xiao.weather.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -24,7 +25,7 @@ import java.util.List;
  *
  * Created by xiao on 2015/9/26.
  */
-public class UserGuideActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
+public class UserGuideActivity extends Activity implements ViewPager.OnPageChangeListener {
     private ViewPager mViewPager;
     private GuideViewAdapter guideViewAdapter;
 

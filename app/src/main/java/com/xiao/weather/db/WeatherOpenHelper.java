@@ -30,7 +30,7 @@ public class WeatherOpenHelper extends SQLiteOpenHelper {
             "city_id integer" +
             ")";
     private static  final String  CRETE_USER = "create table User(" +
-            "user_name text autoincrement," +
+            "user_name text," +
             "user_pwd text" +
             ")";
 
@@ -40,7 +40,7 @@ public class WeatherOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CRETE_USER);//创建用户表
+//        db.execSQL(CRETE_USER);//创建用户表
         db.execSQL(CREATE_PROVINCE);//创建Province表
         db.execSQL(CREATE_CITY);//创建城市表
         db.execSQL(CREATE_COUNTRY);//创建县表

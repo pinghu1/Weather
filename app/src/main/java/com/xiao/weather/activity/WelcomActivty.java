@@ -1,5 +1,6 @@
 package com.xiao.weather.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,7 +17,7 @@ import com.xiao.weather.controller.BaseActivity;
  * 每次启动程序欢迎界面
  * Created by xiao on 2015/9/26.
  */
-public class WelcomActivty extends BaseActivity {
+public class WelcomActivty extends Activity {
     /**
      * 在此界面延迟2秒再跳转
      */
@@ -62,7 +63,7 @@ public class WelcomActivty extends BaseActivity {
     }
 
     private void goWeatherAty(){
-        Intent intent = new Intent(WelcomActivty.this,WeatherActivity.class);
+        Intent intent = new Intent(WelcomActivty.this,ChooseAreaActivity.class);
         startActivity(intent);
         finish();//finish掉不用的界面
     }

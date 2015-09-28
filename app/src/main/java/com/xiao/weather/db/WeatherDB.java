@@ -76,13 +76,11 @@ public class WeatherDB {
                 Province province = new Province();
                 province.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 province.setProvinceName(cursor.getString(cursor.getColumnIndex("province_name")));
-                province.setProviceCode(cursor.getString(cursor.getColumnIndex("provinc_code")));
+                province.setProviceCode(cursor.getString(cursor.getColumnIndex("province_code")));
                 provinces.add(province);
             }while (cursor.moveToNext());
         }
-        if (cursor!=null){
-            cursor.close();
-        }
+
         return provinces;
     }
     /**
@@ -114,16 +112,14 @@ public class WeatherDB {
                 cities.add(city);
             }while (cursor.moveToNext());
         }
-        if (cursor!=null){
-            cursor.close();
-        }
+
         return cities;
     }
 
     /**
      * 将Country实例存储到数据库
      */
-    public void saveCoutry(Country country){
+    public void saveCountry(Country country){
         if (country!=null){
             ContentValues cv = new ContentValues();
             cv.put("country_name",country.getCountryName());
@@ -132,25 +128,24 @@ public class WeatherDB {
             db.insert("Country", null, cv);
         }
     }
+
     /**
      * 从数据库中获取某省某城市的县信息
      */
-    public List<Country> loafCoutries(int cityId){
+    public List<Country> loadCountries(int cityId){
         List<Country> countries = new ArrayList<Country>();
-        Cursor cursor = db.query("City", null, "city_id=?", new String[]{String.valueOf(cityId)}, null, null, null);
+        Cursor cursor = db.query("Country", null, "city_id=?", new String[]{String.valueOf(cityId)}, null, null, null);
         if (cursor.moveToFirst()){
             do{
                 Country country = new Country();
                 country.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 country.setCountryName(cursor.getString(cursor.getColumnIndex("country_name")));
                 country.setCountryCode(cursor.getString(cursor.getColumnIndex("country_code")));
-                country.setCityId(cursor.getInt(cursor.getColumnIndex("city_id")));
+                country.setCityId(cityId);
                 countries.add(country);
             }while (cursor.moveToNext());
         }
-        if (cursor!=null){
-            cursor.close();
-        }
+
         return countries;
     }
 
@@ -163,6 +158,7 @@ public class WeatherDB {
         cv.put("user_pwd",user.getUserPwd());
         db.insert("User",null,cv);
     }
+
     /**
      * 从数据库中获取用户的姓名和密码,验证是否正确
      */
