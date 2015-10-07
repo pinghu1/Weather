@@ -1,16 +1,19 @@
 package com.xiao.weather.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.xiao.weather.R;
 import com.xiao.weather.controller.BaseActivity;
+import com.xiao.weather.service.AutoUpdateService;
 import com.xiao.weather.util.HttpCallbackListener;
 import com.xiao.weather.util.HttpUtil;
 import com.xiao.weather.util.Utility;
@@ -18,7 +21,7 @@ import com.xiao.weather.util.Utility;
 /**
  * Created by xiao on 2015/9/26.
  */
-public class WeatherActivity extends BaseActivity {
+public class WeatherActivity extends BaseActivity implements View.OnClickListener {
     private LinearLayout weatherInfoLayout;
     /**
      *显示城市名
@@ -46,6 +49,15 @@ public class WeatherActivity extends BaseActivity {
      */
     private TextView currentDateText;
 
+    /**
+     * 切换城市按钮
+     */
+    private Button btnBack;
+
+    /**
+     * 刷新天气
+     */
+    private  Button btnRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +78,8 @@ public class WeatherActivity extends BaseActivity {
             //没有县级代号时就直接显示本地天气
             showWeather();
         }
-
+        btnBack.setOnClickListener(this);
+        btnRefresh.setOnClickListener(this);
     }
 
     /**
@@ -80,6 +93,8 @@ public class WeatherActivity extends BaseActivity {
         temp1Text = (TextView) findViewById(R.id.tempfrom);
         temp2Text = (TextView) findViewById(R.id.tempto);
         currentDateText = (TextView) findViewById(R.id.current_date);
+        btnBack = (Button) findViewById(R.id.btn_back);
+        btnRefresh = (Button) findViewById(R.id.btn_refresh);
     }
     private void queryWeatherCode(String countryCode){
         String address = "http://www.weather.com.cn/data/list3/city"+countryCode+".xml";
@@ -147,5 +162,31 @@ public class WeatherActivity extends BaseActivity {
         currentDateText.setText(preferences.getString("current_date", ""));
         weatherInfoLayout.setVisibility(View.VISIBLE);
         cityNameText.setVisibility(View.VISIBLE);
+        //启动后台服务
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_back:
+                Intent intent  = new Intent(this,ChooseAreaActivity.class);
+                intent.putExtra("from_weather_activity", true);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.btn_refresh:
+                publishText.setText("同步中...");
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                String weatherCode = preferences.getString("weather_code","");
+                if (!TextUtils.isEmpty(weatherCode)){
+                    queryWeatherInfo(weatherCode);
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

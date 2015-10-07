@@ -1,26 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.xiao.weather">
-    <uses-permission android:name="android.permission.INTERNET"/>
+    package="com.xiao.weather" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-        <activity android:name=".activity.UserGuideActivity">
-
+        android:theme="@style/AppTheme" >
+        <activity android:name=".activity.UserGuideActivity" >
         </activity>
-        <activity android:name=".activity.WeatherActivity">
+        <activity android:name=".activity.WeatherActivity" >
         </activity>
-        <activity android:name=".activity.WelcomActivty">
-
+        <activity android:name=".activity.WelcomActivty" >
         </activity>
-        <activity android:name=".activity.ChooseAreaActivity">
+        <activity android:name=".activity.ChooseAreaActivity" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <service
+            android:name=".service.AutoUpdateService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+
+        <receiver
+            android:name=".receiver.AutoUpdateReciver"
+            android:enabled="true"
+            android:exported="true" >
+        </receiver>
     </application>
 
 </manifest>
